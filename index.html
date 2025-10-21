@@ -40,14 +40,14 @@
     <footer class="chatbot-footer">
       <form class="chatbot-form" id="chatbotForm" autocomplete="off">
         <label class="sr-only" for="chatbotInput">メッセージ</label>
-        <input
-          type="text"
+        <textarea
           id="chatbotInput"
           class="chatbot-input"
           placeholder="ご質問を入力してください…"
           aria-label="メッセージを入力"
+          rows="3"
           required
-        />
+        ></textarea>
         <button class="chatbot-submit" type="submit" aria-label="Send message">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
