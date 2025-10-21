@@ -6,7 +6,8 @@ $(function () {
   const $input = $("#chatbotInput");
   let isOpen = false;
 
-  const API_ENDPOINT = "/api/chat"; // TODO: 適切なエンドポイントに置き換えてください
+  const API_ENDPOINT = "https://ai-service-a711fb1e-qk2elkopoq-an.a.run.app/chat";
+  const API_KEY = "7378f458-1142-4b";
 
   function toggleChatbot(open) {
     isOpen = typeof open === "boolean" ? open : !isOpen;
@@ -52,11 +53,23 @@ $(function () {
       url: API_ENDPOINT,
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({ message }),
+      headers: {
+        "x-api-key": API_KEY,
+      },
+      data: JSON.stringify({
+        query: message,
+      }),
     })
       .done(function (response) {
-        const botMessage = response?.reply || "回答を取得できませんでした。";
+        const botMessage = response?.answer || "回答を取得できませんでした。";
         appendMessage("bot", botMessage);
+
+        if (response?.source_summary) {
+          appendMessage(
+            "bot",
+            `参考情報:\n${response.source_summary}`
+          );
+        }
       })
       .fail(function (xhr, status) {
         console.error("Chatbot API error", status, xhr);
