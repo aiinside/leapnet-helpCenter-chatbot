@@ -6,7 +6,7 @@ $(function () {
   const $input = $("#chatbotInput");
   let isOpen = false;
 
-  const API_ENDPOINT = "https://ai-service-a711fb1e-qk2elkopoq-an.a.run.app/chat";
+  const API_ENDPOINT = 'http://127.0.0.1:8000/chat';
   const API_KEY = "7378f458-1142-4b";
 
   function toggleChatbot(open) {
