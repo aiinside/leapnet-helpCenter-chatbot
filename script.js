@@ -6,9 +6,10 @@ $(function () {
   const $input = $("#chatbotInput");
   let isOpen = false;
 
-  const API_ENDPOINT = "https://ai-service-a711fb1e-qk2elkopoq-an.a.run.app/chat";
-  const API_KEY = "7378f458-1142-4b";
-
+  // STG
+  const API_ENDPOINT = "https://ai-service-bb8f2aff-a3c4-4a03-adef-a47e2d3eff87-322dbepmma-an.a.run.app/chat";
+  const API_KEY = "f659bed3-b9b1-4d";
+  
   function toggleChatbot(open) {
     isOpen = typeof open === "boolean" ? open : !isOpen;
     $container.toggleClass("is-open", isOpen);
