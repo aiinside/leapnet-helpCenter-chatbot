@@ -1,0 +1,6 @@
+fastapi
+uv
+httpx
+uvicorn
+requests
+pyyaml
