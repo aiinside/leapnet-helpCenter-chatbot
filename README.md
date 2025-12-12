@@ -79,16 +79,13 @@ brew install uv
 
 uv pip install -r app/requirements.txt
 
-
 ```
 
 
 ### 2. 起動
 
 ```
-
 uv run uvicorn app.main:app --reload
-
 
 ```
 
@@ -96,12 +93,16 @@ uv run uvicorn app.main:app --reload
 ### 2. 起動(本番)
 
 ```
-
-uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
-
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 &
 
 ```
+### 3. 停止(本番)
 
+```
+sudo ps aux | grep uv
+sudo kill -9 [対象プロセス番号]
+
+```
 
 
 ## How to Run（Windows: Powershell管理者）
