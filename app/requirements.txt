@@ -3,3 +3,4 @@ uv
 httpx
 uvicorn
 requests
+pyyaml

@@ -6,8 +6,8 @@ $(function () {
   const $input = $("#chatbotInput");
   let isOpen = false;
 
-  const API_ENDPOINT = 'http://127.0.0.1:8000/chat';
-  const API_KEY = "7378f458-1142-4b";
+  const API_ENDPOINT = 'https://blue-dream-a358.bing-bai-60c.workers.dev/chat';
+  //const API_KEY = "7378f458-1142-4b";
 
   function toggleChatbot(open) {
     isOpen = typeof open === "boolean" ? open : !isOpen;
@@ -54,7 +54,7 @@ $(function () {
       method: "POST",
       contentType: "application/json",
       headers: {
-        "x-api-key": API_KEY,
+//        "x-api-key": API_KEY,
       },
       data: JSON.stringify({
         query: message,

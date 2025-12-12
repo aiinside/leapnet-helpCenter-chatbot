@@ -72,7 +72,7 @@ async def chat_request(endpoint: str, headers: Header, data: json, path: str):
                {
                    "path": path,
                    "method": "POST",
-                   "query": data.get("query"),
+                #   "query": data,
                    "answer": answer_value,
                    "status_code": status_code,
                    "error": error_detail,

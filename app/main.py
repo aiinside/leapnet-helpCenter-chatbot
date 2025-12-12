@@ -99,6 +99,7 @@ async def chat(chat_request: ChatRequest):
     }
     api_endpoint = settings.api_endpoint
     path = "/chat"
+    data = {"query": chat_request.query}
     
     return await utils.chat_request(api_endpoint, headers, data, path)
     
@@ -111,7 +112,8 @@ async def test_chat(chat_request: ChatRequest):
     }
     api_endpoint = settings.stg_api_endpoint
     path = "/test/chat"
-    
+    data = {"query": chat_request.query}
+
     return await utils.chat_request(api_endpoint, headers, data, path)
     
    
