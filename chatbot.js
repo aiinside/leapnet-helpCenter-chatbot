@@ -7,6 +7,7 @@ $(function () {
   let isOpen = false;
 
   const API_ENDPOINT = 'https://blue-dream-a358.bing-bai-60c.workers.dev/chat';
+  //const API_ENDPOINT = 'http://127.0.0.1:8000/chat'; // localテスト
   //const API_KEY = "7378f458-1142-4b";
 
   function toggleChatbot(open) {

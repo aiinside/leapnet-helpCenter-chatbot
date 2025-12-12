@@ -19,7 +19,8 @@ async def chat_request(endpoint: str, headers: Header, data: json, path: str):
     answer_value = None
     error_detail = None
     status_code = None
-    
+    query_value = data.get("query")
+
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(
@@ -72,7 +73,7 @@ async def chat_request(endpoint: str, headers: Header, data: json, path: str):
                {
                    "path": path,
                    "method": "POST",
-                #   "query": data,
+                   "query": query_value,
                    "answer": answer_value,
                    "status_code": status_code,
                    "error": error_detail,

@@ -93,6 +93,16 @@ uv run uvicorn app.main:app --reload
 ```
 
 
+### 2. 起動(本番)
+
+```
+
+uv run uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+
+```
+
+
 
 ## How to Run（Windows: Powershell管理者）
 
