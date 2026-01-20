@@ -69,7 +69,9 @@ Leapnet エージェント（agent.leapnet.com）
 
 ---
 
-## How to Run（macOS/本番）
+# FastAPI
+
+##  How to Run（macOS/本番）
 
 ### 1. 依存関係のインストール
 
@@ -90,24 +92,23 @@ uv run uvicorn app.main:app --reload
 ```
 
 
-### 2. 起動(本番)
+### 3. 起動(本番)
 
 ```
 uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 &
 
 ```
-### 3. 停止(本番)
+### 4. 停止(本番)
 
 ```
 sudo ps aux | grep uv
 sudo kill -9 [対象プロセス番号]
-
 ```
 
 
 ## How to Run（Windows: Powershell管理者）
 
-### 0. 実行環境
+### 0. 実行環境 
 
 - pyenv-win + Poetry
 
@@ -117,19 +118,37 @@ sudo kill -9 [対象プロセス番号]
 ### 1. 依存関係のインストール
 
 ```
-
-
 poetry run pip　install -r app/requirements.txt
-
-
 ```
 
 
 ### 2. 起動
 
 ```
-
 poetry run uvicorn app.main:app --reload
+```
+---
+# Batch 
 
+## 概要
+
+- chat-requests.log.yyyy-mm-ddからcsvファイルに変換する
+- フォルダcsvにCSVファイルを生成する
+- 引数 [--overwrite]をつけると、作成したCSVファイルを再作成できる
+
+## How to Run
+
+### 1. 起動（Windows/Powershell）
 
 ```
+poetry run python app/chat_requests_log2csv_batch.py
+```
+
+### 2. 起動(本番)
+
+```
+sudo su
+cd /opt/leapnet-helpCenter-chatbot
+uv run python  app/chat_requests_log2csv_batch.py
+```
+
