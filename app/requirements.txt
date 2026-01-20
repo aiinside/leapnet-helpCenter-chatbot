@@ -4,3 +4,4 @@ httpx
 uvicorn
 requests
 pyyaml
+tzdata
