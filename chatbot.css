@@ -97,6 +97,11 @@ body {
   gap: 6px;
   font-size: 0.8rem;
   color: var(--text-secondary);
+   visibility: hidden;
+}
+
+.chatbot-rating-description.is-visible {
+  visibility: visible;
 }
 
 .chatbot-status span {
@@ -280,6 +285,54 @@ body {
 
 .chatbot-typing span:nth-child(3) {
   animation-delay: 0.3s;
+}
+
+.chatbot-rating {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 8px 16px 44px;
+}
+
+.chatbot-rating-description {
+  margin: 0;
+  width: 100%;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  visibility: hidden;
+}
+
+.chatbot-rating-description.is-visible {
+  visibility: visible;
+}
+
+.chatbot-rating-button {
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #fff;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chatbot-rating-button:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+}
+
+.chatbot-rating-button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.chatbot-rating-button.is-selected {
+  border-color: var(--primary);
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary-dark);
+  font-weight: 600;
 }
 
 @keyframes typing {

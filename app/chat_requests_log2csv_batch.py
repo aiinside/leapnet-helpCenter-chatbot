@@ -6,8 +6,8 @@ Usage:
 
 The script searches the specified log directory for all files named
 ``chat-request.logs.<timestamp>`` and produces matching CSV files named
-``chat-request.csv.<timestamp>`` containing the ``timestamp``, ``query`` and
-``answer`` fields from each JSON log entry.
+``chat-request.csv.<timestamp>`` containing the request ``timestamp``,
+``requestId``, ``query``, ``answer`` and correlated ``rating`` fields.
 """
 
 from __future__ import annotations
@@ -50,6 +50,11 @@ def discover_log_files(log_dir: Path) -> List[Path]:
 
     return sorted(log_dir.glob("chat-requests.log.*"))
 
+def discover_rating_log_files(log_dir: Path) -> List[Path]:
+    """Return all chat-ratings log files within the log directory."""
+
+    return sorted(log_dir.glob("chat-requests-ratings.log.*"))
+
 
 def setup_logger(log_dir: Path) -> logging.Logger:
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -77,8 +82,37 @@ def setup_logger(log_dir: Path) -> logging.Logger:
 
     return logger
 
+def extract_rating_records(log_files: Iterable[Path]) -> Dict[str, Dict[str, Any]]:
+    ratings_by_request_id: Dict[str, Dict[str, Any]] = {}
 
-def extract_records(log_file: Path) -> List[Dict[str, Any]]:
+    for log_file in log_files:
+        with log_file.open(encoding="utf-8") as handle:
+            for line in handle:
+                entry = line.strip()
+                if not entry:
+                    continue
+                try:
+                    payload: Dict[str, Any] = json.loads(entry)
+                except json.JSONDecodeError:
+                    continue
+
+                request_id = payload.get("requestId") or payload.get("reqeustId")
+                rating = payload.get("rating")
+                if not request_id or rating is None:
+                    continue
+
+                if payload.get("event") != "chat_rating":
+                    continue
+
+                ratings_by_request_id[request_id] = {
+                    "rating": rating,
+                }
+
+    return ratings_by_request_id
+
+def extract_records(
+  log_file: Path, ratings_by_request_id: Dict[str, Dict[str, Any]]
+) -> List[Dict[str, Any]]:
     records: List[Dict[str, Any]] = []
 
     def _to_single_line(value: Any) -> Any:
@@ -103,12 +137,16 @@ def extract_records(log_file: Path) -> List[Dict[str, Any]]:
             timestamp_jst = dt_utc.astimezone(JST).strftime("%Y-%m-%d %H:%M:%S,%f")[:-3]
             query = payload.get("query")
             answer = payload.get("answer")
+            requestId = payload.get("requestId")
+            rating_record = ratings_by_request_id.get(requestId, {})
 
             records.append({
                 "timestamp": timestamp_str,
                 "timestamp_jst": timestamp_jst,
                 "query": _to_single_line(query),
                 "answer": _to_single_line(answer),
+                "requestId": requestId,
+                "rating": rating_record.get("rating"),
             })
     return records
 
@@ -119,7 +157,7 @@ def write_csv(csv_file: Path, records: Iterable[Dict[str, Any]]) -> None:
     with csv_file.open("w", encoding="utf-8-sig", newline="") as handle:
         writer = csv.DictWriter(
             handle,
-            fieldnames=["timestamp", "timestamp_jst", "query", "answer"],
+            fieldnames=["timestamp", "timestamp_jst", "query", "answer", "requestId", "rating"],
             quoting=csv.QUOTE_ALL,
         )
         #writer.writeheader() #ファイル結合しやすいように、ヘッダーを出力しない
@@ -140,6 +178,10 @@ def main() -> int:
         logger.warning("対象のログファイルが見つかりません: %s", log_dir)
         return 1
 
+    rating_log_files = discover_rating_log_files(log_dir)
+    ratings_by_request_id = extract_rating_records(rating_log_files)
+
+
     exit_code = 0
     for log_file in log_files:
         if not log_file.exists():
@@ -158,7 +200,7 @@ def main() -> int:
                 logger.debug("CSVファイルが既に存在します: %s", csv_file)
                 continue
 
-        records = extract_records(log_file)
+        records = extract_records(log_file, ratings_by_request_id)
         write_csv(csv_file, records)
         logger.info("出力が完了しました: %s", csv_file)
 

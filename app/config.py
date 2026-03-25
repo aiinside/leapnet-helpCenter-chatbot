@@ -10,7 +10,9 @@ from pydantic import BaseModel, Field
 class LogSettings(BaseModel):
     directory: Path = Field(default=Path("logs"))
     system_file: str = Field(default="system.log")
-    request_file: str = Field(default="requests.log")
+    request_file: str = Field(default="chat-requests.log")
+    request_rating_file: str = Field(default="chat-requests-ratings.log")
+
 
 class Settings(BaseModel):
     api_endpoint: str

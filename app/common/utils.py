@@ -14,7 +14,7 @@ system_logger = create_logger("app.system", settings.log.system_file)
 request_logger = create_logger("app.requests", settings.log.request_file)
 
 # chat_request
-async def chat_request(endpoint: str, headers: Header, data: json, path: str):
+async def chat_request(endpoint: str, headers: Header, data: json, path: str, requestId: str):
 
     answer_value = None
     error_detail = None
@@ -73,6 +73,7 @@ async def chat_request(endpoint: str, headers: Header, data: json, path: str):
                {
                    "path": path,
                    "method": "POST",
+                   "requestId": requestId,
                    "query": query_value,
                    "answer": answer_value,
                    "status_code": status_code,

@@ -34,7 +34,7 @@ export default {
     }
 
     // --- プロキシ対象パス ---
-    const proxyTargets = ["/chat", "/test/chat"];
+    const proxyTargets = ["/chat", "/test/chat", "/chat_rating"];
 
     if (proxyTargets.includes(url.pathname)) {
       const targetUrl = API_ORIGIN + url.pathname;
