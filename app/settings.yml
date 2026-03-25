@@ -1,8 +1,9 @@
-api_endpoint: "https://agent.leapnet.com/36e6f9eb-af00-4ecc-99f1-1b0ed097d816/chat"
-api_key: "908a7aa8-8d95-4adf-a558-6a649505e31b"
+api_endpoint: "https://agent.leapnet.com/1f1ae516-8c94-4047-83fb-27d74af06d25/chat"
+api_key: "cba6a10d-f730-4a1a-b70b-60eb57a7ad5b"
 stg_api_endpoint: "https://ai-service-3883fcac-5a9a-4157-a321-00af3a6d6cc5-322dbepmma-an.a.run.app/chat"
 stg_api_key: "4d6206ba-2908-4a"
 log:
   directory: "logs"
   system_file: "system.log"
   request_file: "chat-requests.log"
+  request_rating_file: "chat-requests-ratings.log"
